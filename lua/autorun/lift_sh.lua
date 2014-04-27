@@ -58,22 +58,27 @@ hook.Add("InitPostEntity", "Liftcatcher", function()
 	lift = Entity(757+game.MaxPlayers());
 	-- game.CleanupMap() catch ¬_¬'
 	if (not IsValid(lift) or lift:GetClass() ~= "func_tracktrain") then
+		print("Not lift.")
+		lift = NULL;
 		--for _, ent in pairs(ents.FindInBox(Vector(-7350, -9600, 40), Vector(-7300, -9500, 80))) do
-		for _, ent in pairs(ents.FindInBox(ghqup, ghqdown - Vector(0,0,20))) do
+		for _, ent in pairs(ents.FindInBox(ghqup, ghqdown)) do
+			print("Is lift? ", ent);
 			if (ent:GetClass() == "func_tracktrain") then
+				print("Yup, lift.");
 				lift = ent;
 				break;
 			end
 		end
 	end
 	if (not IsValid(lift)) then
-		error("WHAT THE FUCK WHY IS THE LIFT NOT THERE");
 		local m = Msg;
 		Msg = ErrorNoHalt;
-		PrintTable(ents.FindInBox(ghqup, ghqdown - Vector(0,0,20)));
+		PrintTable(ents.FindInBox(ghqup, ghqdown));
 		Msg = m;
+		error("WHAT THE FUCK WHY IS THE LIFT NOT THERE");
 	end
 	dosounds();
+	end);
 end);
 -- Hides anyone with a differing lift number
 hook.Add("PrePlayerDraw", "Lift Player H1d3r", function(ply)

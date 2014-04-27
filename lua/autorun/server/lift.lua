@@ -168,13 +168,18 @@ local function moveNoise(liftnum, mode)
 	SendUserMessage("Lift Move", rcp, mode);
 end
 
+local ghqup, ghqdown = Vector(-6870.458, -9682.7305, 3921.0347), Vector(-7571.376, -9296.7158, 67.8573);
 local function initLift()
 	local lift = Entity(757+game.MaxPlayers());
 	print(lift, lift:GetClass());
 	-- game.CleanupMap() catch ¬_¬'
 	if (lift:GetClass() ~= "func_tracktrain") then
-		for _, ent in pairs(ents.FindInBox(Vector(-7337, -9590, 50), Vector(-7335, -9588, 62))) do
+		print("Not lift.")
+		lift = NULL;
+		for _, ent in pairs(ents.FindInBox(ghqup, ghqdown - Vector(0,0,20))) do
+			print("Is lift? ", ent);
 			if (ent:GetClass() == "func_tracktrain") then
+				print("Yup, lift.");
 				lift = ent;
 				break;
 			end
@@ -190,8 +195,9 @@ local function initLift()
 	}
 	local class;
 	for _,ent in pairs(ents.FindInBox(Vector(-7248.3320, -9495.4482, 63.3047), Vector(-7424.3315, -9679.2529, 195.5849))) do
-		print(ent, ent:GetClass());
+		print("box", ent, ent:GetClass());
 		if (not noremoves[ent:GetClass():lower()]) then
+			print("Bang!");
 			ent:Remove()
 		end
 	end
