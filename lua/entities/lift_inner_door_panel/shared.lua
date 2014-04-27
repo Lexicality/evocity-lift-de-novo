@@ -1,7 +1,7 @@
 --[[
 	Lift door panel (Inner)
 --]]
-ENT.Type      = "anim"  
+ENT.Type      = "anim"
 ENT.Base      = "lift_door_panel"
 ENT.PrintName = "Inner Lift Door Panel"
 ENT.Author    = "Lexi"

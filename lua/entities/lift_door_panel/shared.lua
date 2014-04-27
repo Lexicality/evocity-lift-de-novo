@@ -1,4 +1,4 @@
-ENT.Type      = "anim"  
+ENT.Type      = "anim"
 ENT.Base      = "base_anim"
 ENT.PrintName = "Base Lift Door Panel"
 ENT.Author    = "Lexi"
@@ -57,12 +57,12 @@ else
 		-- Backplate
 		render.SetMaterial(backmaterial);
 		render.DrawQuadEasy(pos, dir, size, size, colour, rotation);
-		
+
 		pos = pos + dir/4;
 		-- First outer cog
 		render.SetMaterial(backouter);
 		render.DrawQuadEasy(pos, dir, size, size, colour, outerrotation);
-		
+
 		pos = pos + dir/4;
 		-- Inner Inner Teeth
 		render.SetMaterial(innerteeth1);
@@ -70,7 +70,7 @@ else
 		-- Outer Inner Teeth
 		render.SetMaterial(innerteeth2);
 		render.DrawQuadEasy(pos, dir, size, size, colour, innerrotation2);
-		
+
 		pos = pos + dir/4;
 		-- Third outer cog - counterspin
 		render.SetMaterial(backouter3);
@@ -81,7 +81,7 @@ else
 		-- Inner Ring (No spin)
 		render.SetMaterial(innerring);
 		render.DrawQuadEasy(pos, dir, size, size, colour, rotation);
-		
+
 		-- 3/4 from the end
 		pos = pos + dir/2;
 		render.SetMaterial(liftsymbol);
@@ -93,7 +93,7 @@ else
 			render.DrawQuadEasy(pos, dir, size, size, whitecolour, rotation);
 		end
 	end
-	
+
 	function ENT:IsBeingLookedAt()
 		local tr = LocalPlayer():GetEyeTrace();
 		return tr.Entity == self and tr.HitPos:Distance(LocalPlayer():GetPos()) < 90;

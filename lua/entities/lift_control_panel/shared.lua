@@ -2,7 +2,7 @@
 -- Lift control panel - Shared
 --
 
-ENT.Type      = "anim"  
+ENT.Type      = "anim"
 ENT.Base      = "base_anim"
 ENT.PrintName = "Lift Control Panel"
 ENT.Author    = "Lexi"

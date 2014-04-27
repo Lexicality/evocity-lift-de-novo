@@ -19,4 +19,4 @@ function ENT:Use(activator)
 	if (self:GetDTBool(liftnum - 1)) then
 		lift.GetOut(activator);
 	end
-end	
+end

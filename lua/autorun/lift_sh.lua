@@ -3,7 +3,7 @@
 --]]
 if (game.GetMap():lower() ~= "rp_evocity_v17x") then return; end
 local collides = {
-	func_door = true; 
+	func_door = true;
 	func_tracktrain = true;
 	-- REALLY DIRTY HACK
 	lift_inner_door_panel = true;
@@ -75,7 +75,7 @@ hook.Add("InitPostEntity", "Liftcatcher", function()
 	end
 	dosounds();
 end);
--- Hides anyone with a differing lift number 
+-- Hides anyone with a differing lift number
 hook.Add("PrePlayerDraw", "Lift Player H1d3r", function(ply)
 	if (lpl:GetNWInt("liftnumber") ~= ply:GetNWInt("liftnumber")) then
 		return true;
@@ -85,7 +85,7 @@ local bell = Sound("plats/elevbell1.wav");
 usermessage.Hook("Lift Bell", function(um)
 	local button = um:ReadEntity();
 	if (lpl:GetNWInt("liftnumber") == 0 and IsValid(button)) then
-		button:EmitSound(bell);	
+		button:EmitSound(bell);
 	end
 end);
 local start = Sound("plats/elevator_start1.wav");

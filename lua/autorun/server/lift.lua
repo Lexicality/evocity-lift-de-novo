@@ -167,7 +167,7 @@ local function moveNoise(liftnum, mode)
 	end
 	SendUserMessage("Lift Move", rcp, mode);
 end
-		
+
 local function initLift()
 	local lift = Entity(757+MaxPlayers());
 	print(lift, lift:GetClass());
@@ -332,7 +332,7 @@ do
 			end
 		end
 		print("LIFT: Could not find a request below the current position.");
-	
+
 	end
 	function calculateNextStop(liftnum)
 		print("LIFT: Calculating next stop for lift ",liftnum);
@@ -420,7 +420,7 @@ function lift.GetOut(ply)
 	ply:SetPos(exits[liftnum][liftpos[liftnum]]);
 	ply:SetNWInt("liftnumber", 0);
 end
-	
+
 
 hook.Add("InitPostEntity", "Lift correctional facility", function()
 	timer.Simple(1, initLift);
