@@ -1,0 +1,7 @@
+"UnlitGeneric"
+{
+	"$basetexture" "lift/holo_controls_arrow"
+	"$nocull" 1
+	"$nolod" 1
+	"$translucent" 1
+}

@@ -1,0 +1,7 @@
+"UnlitGeneric"
+{
+	"$basetexture" "lift/doorcontrol_call_new"
+	"$nocull" 1
+	"$nolod" 1
+	"$translucent" 1
+}

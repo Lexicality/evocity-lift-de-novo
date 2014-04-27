@@ -1,0 +1,7 @@
+"UnlitGeneric"
+{
+	"$basetexture" "lift/doorcontrol_background_inner_ring3"
+	"$nocull" 1
+	"$translucent" 1
+	"$vertexcolor" 1
+}
