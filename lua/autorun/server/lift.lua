@@ -170,8 +170,8 @@ end
 
 local ghqup, ghqdown = Vector(-6870.458, -9682.7305, 3921.0347), Vector(-7571.376, -9296.7158, 67.8573);
 local function initLift()
-	local lift = Entity(757+game.MaxPlayers());
-	print(lift, lift:GetClass());
+	local lift = Entity(758+game.MaxPlayers());
+	print("Got Lift:", lift, lift:GetClass());
 	-- game.CleanupMap() catch ¬_¬'
 	if (lift:GetClass() ~= "func_tracktrain") then
 		print("Not lift.")

@@ -55,7 +55,8 @@ local lift = NULL;
 local dosounds;
 hook.Add("InitPostEntity", "Liftcatcher", function()
 	lpl = LocalPlayer();
-	lift = Entity(757+game.MaxPlayers());
+	lift = Entity(758+game.MaxPlayers());
+	print("Got Lift:", lift);
 	-- game.CleanupMap() catch ¬_¬'
 	if (not IsValid(lift) or lift:GetClass() ~= "func_tracktrain") then
 		print("Not lift.")
