@@ -6,6 +6,8 @@ ENT.Contact   = ""
 ENT.Purpose   = "HOLE-O-GRAMZ"
 ENT.Spawnable = false
 
+AddCSLuaFile();
+
 if (SERVER) then
 	function ENT:Initialize()
 		self:SetModel("models/props_junk/sawblade001a.mdl")

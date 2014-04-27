@@ -23,7 +23,7 @@ do
 	local world = NULL;
 	hook.Add("InitPostEntity", "getworld - lift", function()
 		if (SERVER) then
-			world = GetWorldEntity();
+			world = game.GetWorld();
 		else
 			world = Entity(0);
 		end
@@ -55,7 +55,7 @@ local lift = NULL;
 local dosounds;
 hook.Add("InitPostEntity", "Liftcatcher", function()
 	lpl = LocalPlayer();
-	lift = Entity(757+MaxPlayers());
+	lift = Entity(757+game.MaxPlayers());
 	-- game.CleanupMap() catch ¬_¬'
 	if (not IsValid(lift) or lift:GetClass() ~= "func_tracktrain") then
 		--for _, ent in pairs(ents.FindInBox(Vector(-7350, -9600, 40), Vector(-7300, -9500, 80))) do

@@ -1,9 +1,9 @@
 if (game.GetMap():lower() ~= "rp_evocity_v17x") then return; end
 AddCSLuaFile("autorun/lift_sh.lua");
 do
-	local path = "../addons/lift/materials/lift/*"
+	local path = "addons/lift/materials/lift/*"
 	local mat = "materials/lift/";
-	for _, filename in pairs(file.Find(path)) do
+	for _, filename in pairs(file.Find(path, "MOD")) do
 		resource.AddSingleFile(mat..filename);
 	end
 end
@@ -169,7 +169,7 @@ local function moveNoise(liftnum, mode)
 end
 
 local function initLift()
-	local lift = Entity(757+MaxPlayers());
+	local lift = Entity(757+game.MaxPlayers());
 	print(lift, lift:GetClass());
 	-- game.CleanupMap() catch ¬_¬'
 	if (lift:GetClass() ~= "func_tracktrain") then
