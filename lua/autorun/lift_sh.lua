@@ -79,7 +79,6 @@ hook.Add("InitPostEntity", "Liftcatcher", function()
 		error("WHAT THE FUCK WHY IS THE LIFT NOT THERE");
 	end
 	dosounds();
-	end);
 end);
 -- Hides anyone with a differing lift number
 hook.Add("PrePlayerDraw", "Lift Player H1d3r", function(ply)
