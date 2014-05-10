@@ -86,7 +86,7 @@ function ENT:DrawMask( windowSize )
 
 	mesh.Begin( MATERIAL_QUADS, segments );
 
-	local base = pos + u * 0.5;
+	local base = pos + u * -0.5;
 	local a = base + (-f - r) * windowSize
 	local b = base + ( f - r) * windowSize
 	local c = base + ( f + r) * windowSize
@@ -125,6 +125,25 @@ function ENT:DrawInterior(windowSize)
 	mesh.Quad(a, b, c, d);
 	mesh.End();
 
+	-- Left
+	base = pos + r * windowSize + u * - windowSize;
+	a = base + (-u + f) * windowSize
+	b = base + ( u + f) * windowSize
+	c = base + ( u - f) * windowSize
+	d = base + (-u - f) * windowSize
+	mesh.Begin(MATERIAL_QUADS, 4);
+	mesh.Quad(a, b, c, d);
+	mesh.End();
+
+	-- Right
+	base = pos + r * -windowSize + u * - windowSize;
+	a = base + (-u - f) * windowSize
+	b = base + ( u - f) * windowSize
+	c = base + ( u + f) * windowSize
+	d = base + (-u + f) * windowSize
+	mesh.Begin(MATERIAL_QUADS, 4);
+	mesh.Quad(a, b, c, d);
+	mesh.End();
 
 	-- Top
 	base = pos + f * -windowSize + u * - windowSize;
@@ -132,6 +151,16 @@ function ENT:DrawInterior(windowSize)
 	b = base + ( u + r) * windowSize
 	c = base + ( u - r) * windowSize
 	d = base + (-u - r) * windowSize
+	mesh.Begin(MATERIAL_QUADS, 4);
+	mesh.Quad(a, b, c, d);
+	mesh.End();
+
+	-- Back
+	base = pos + u * - windowSize*2;
+	a = base + (-r + f) * windowSize
+	b = base + ( r + f) * windowSize
+	c = base + ( r - f) * windowSize
+	d = base + (-r - f) * windowSize
 	mesh.Begin(MATERIAL_QUADS, 4);
 	mesh.Quad(a, b, c, d);
 	mesh.End();
