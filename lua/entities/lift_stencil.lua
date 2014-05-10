@@ -39,17 +39,12 @@ function ENT:Initialize()
 
 	if ( SERVER ) then
 
-		self:SetModel( "models/hunter/plates/plate1x1.mdl" )
-		self:PhysicsInit( SOLID_VPHYSICS )
-		self:SetMoveType(MOVETYPE_VPHYSICS)
-		self:SetSolid(SOLID_VPHYSICS)
+		self:SetModel("models/hunter/plates/plate1x1.mdl");
+		self:PhysicsInit(SOLID_VPHYSICS);
+		self:SetMoveType(MOVETYPE_VPHYSICS);
+		self:SetSolid(SOLID_VPHYSICS);
 
-		-- Wake the physics object up. It's time to have fun!
-		local phys = self:GetPhysicsObject()
-		phys:Wake()
-
-		-- Set collision bounds exactly
-		-- self:SetCollisionBounds( Vector( -size, -size, -size ), Vector( size, size, size ) )
+		self:GetPhysicsObject():Wake();
 
 	else
 
@@ -95,10 +90,10 @@ function ENT:DrawMask( wx, wy )
 	mesh.Begin( MATERIAL_QUADS, segments );
 
 	local base = p + z * -0.5;
-	local a = base + (-y * wy) + (-x * wx)
-	local b = base + ( y * wy) + (-x * wx)
-	local c = base + ( y * wy) + ( x * wx)
-	local d = base + (-y * wy) + ( x * wx)
+	local a = base + (-y * wy) + (-x * wx);
+	local b = base + ( y * wy) + (-x * wx);
+	local c = base + ( y * wy) + ( x * wx);
+	local d = base + (-y * wy) + ( x * wx);
 
 	mesh.Quad(a, b, c, d);
 
@@ -120,7 +115,7 @@ function ENT:DrawInterior(wx, wy)
 	local size = 20;
 
 	render.SetMaterial(mat);
-	render.SuppressEngineLighting(true)
+	render.SuppressEngineLighting(true);
 
 	local base, a, b, c, d;
 
@@ -142,28 +137,28 @@ function ENT:DrawInterior(wx, wy)
 		base = p - z;
 
 		-- Bottom
-		point(-x,  y, -z, 1, 0.2)
-		point(-x,  y,  z, 1, 0)
-		point( x,  y,  z, 0, 0)
-		point( x,  y, -z, 0, 0.2)
+		point(-x,  y, -z, 1, 0.2);
+		point(-x,  y,  z, 1, 0  );
+		point( x,  y,  z, 0, 0  );
+		point( x,  y, -z, 0, 0.2);
 
 		-- Left
-		point( x,  y, -z, 0.2, 1)
-		point( x,  y,  z, 0,   1)
-		point( x, -y,  z, 0,   0)
-		point( x, -y, -z, 0.2, 0)
+		point( x,  y, -z, 0.2, 1);
+		point( x,  y,  z, 0,   1);
+		point( x, -y,  z, 0,   0);
+		point( x, -y, -z, 0.2, 0);
 
 		-- Top
-		point( x, -y, -z, 0, 0.2)
-		point( x, -y,  z, 0, 0)
-		point(-x, -y,  z, 1, 0)
-		point(-x, -y, -z, 1, 0.2)
+		point( x, -y, -z, 0, 0.2);
+		point( x, -y,  z, 0, 0  );
+		point(-x, -y,  z, 1, 0  );
+		point(-x, -y, -z, 1, 0.2);
 
 		-- Right
-		point(-x, -y, -z, 0.2, 0)
-		point(-x, -y,  z, 0,   0)
-		point(-x,  y,  z, 0,   1)
-		point(-x,  y, -z, 0.2, 1)
+		point(-x, -y, -z, 0.2, 0);
+		point(-x, -y,  z, 0,   0);
+		point(-x,  y,  z, 0,   1);
+		point(-x,  y, -z, 0.2, 1);
 	end
 
 	-- Interior
@@ -173,30 +168,30 @@ function ENT:DrawInterior(wx, wy)
 		base = base - z * doorDepth - z * interiorDepth;
 		local x, y, z = x * interiorWidth, y * wy, z * interiorDepth;
 		-- Bottom
-		point(-x,  y, -z,  1.5, 1)
-		point(-x,  y,  z,  1.5, 0.2)
-		point( x,  y,  z, -0.5, 0.2)
-		point( x,  y, -z, -0.5, 1)
+		point(-x,  y, -z,  1.5, 1);
+		point(-x,  y,  z,  1.5, 0.2);
+		point( x,  y,  z, -0.5, 0.2);
+		point( x,  y, -z, -0.5, 1);
 		-- Left
-		point( x,  y, -z, 1,   1)
-		point( x,  y,  z, 0.2, 1)
-		point( x, -y,  z, 0.2, 0)
-		point( x, -y, -z, 1,   0)
+		point( x,  y, -z, 1,   1);
+		point( x,  y,  z, 0.2, 1);
+		point( x, -y,  z, 0.2, 0);
+		point( x, -y, -z, 1,   0);
 		-- Top
-		point( x, -y, -z, -0.5, 1)
-		point( x, -y,  z, -0.5, 0.2)
-		point(-x, -y,  z,  1.5, 0.2)
-		point(-x, -y, -z,  1.5, 1)
+		point( x, -y, -z, -0.5, 1);
+		point( x, -y,  z, -0.5, 0.2);
+		point(-x, -y,  z,  1.5, 0.2);
+		point(-x, -y, -z,  1.5, 1);
 		-- Right
-		point(-x, -y, -z, 1,   0)
-		point(-x, -y,  z, 0.2, 0)
-		point(-x,  y,  z, 0.2, 1)
-		point(-x,  y, -z, 1,   1)
+		point(-x, -y, -z, 1,   0);
+		point(-x, -y,  z, 0.2, 0);
+		point(-x,  y,  z, 0.2, 1);
+		point(-x,  y, -z, 1,   1);
 		-- Back
-		point(-x,  y, -z, -0.5, 1)
-		point( x,  y, -z,  1.5, 1)
-		point( x, -y, -z,  1.5, 0)
-		point(-x, -y, -z, -0.5, 0)
+		point(-x,  y, -z, -0.5, 1);
+		point( x,  y, -z,  1.5, 1);
+		point( x, -y, -z,  1.5, 0);
+		point(-x, -y, -z, -0.5, 0);
 	end
 
 	mesh.End()
@@ -208,14 +203,14 @@ function ENT:DrawInterior(wx, wy)
 		end
 	end
 
-	render.SuppressEngineLighting(false)
+	render.SuppressEngineLighting(false);
 
 end
 
 
 function ENT:DrawOverlay()
 
-	-- self:DrawModel()d
+	-- self:DrawModel();
 end
 
 
