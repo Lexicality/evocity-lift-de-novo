@@ -98,9 +98,9 @@ function ENT:DrawMask( wx, wy )
 
 end
 
--- local mat = Material("phoenix_storms/cube");
+local mat = Material("phoenix_storms/cube");
 -- local mat = Material("models/wireframe");
-local mat = Material("models/props_c17/paper01");
+-- local mat = Material("models/props_c17/paper01");
 
 function ENT:DrawInterior(wx, wy)
 
@@ -116,7 +116,6 @@ function ENT:DrawInterior(wx, wy)
 
 	local base, a, b, c, d;
 
-	base = p + z * -zd;
 	local zd = wx;
 
 	local function point(x, y, z, u, v)
@@ -127,31 +126,32 @@ function ENT:DrawInterior(wx, wy)
 
 	mesh.Begin(MATERIAL_QUADS, 16);
 	do
-		local x,y,z = x * wx, y * wy, z * zd;
+		local x, y, z = x * wx, y * wy, z * 10;
+		base = p - z;
 
 		-- Bottom
-		point(-x,  y, -z, 1, 0)
-		point(-x,  y,  z, 1, 1)
-		point( x,  y,  z, 0, 1)
-		point( x,  y, -z, 0, 0)
+		point(-x,  y, -z, 1, 0.2)
+		point(-x,  y,  z, 1, 0)
+		point( x,  y,  z, 0, 0)
+		point( x,  y, -z, 0, 0.2)
 
 		-- Left
-		point( x,  y, -z, 1, 1)
+		point( x,  y, -z, 0.2, 1)
 		point( x,  y,  z, 0, 1)
 		point( x, -y,  z, 0, 0)
-		point( x, -y, -z, 1, 0)
+		point( x, -y, -z, 0.2, 0)
 
 		-- Top
-		point( x, -y, -z, 0, 0)
-		point( x, -y,  z, 0, 1)
-		point(-x, -y,  z, 1, 1)
-		point(-x, -y, -z, 1, 0)
+		point( x, -y, -z, 0, 0.2)
+		point( x, -y,  z, 0, 0)
+		point(-x, -y,  z, 1, 0)
+		point(-x, -y, -z, 1, 0.2)
 
 		-- Right
-		point(-x, -y, -z, 0, 0)
-		point(-x, -y,  z, 1, 0)
-		point(-x,  y,  z, 1, 1)
-		point(-x,  y, -z, 0, 1)
+		point(-x, -y, -z, 0.2, 0)
+		point(-x, -y,  z, 0, 0)
+		point(-x,  y,  z, 0, 1)
+		point(-x,  y, -z, 0.2, 1)
 	end
 	mesh.End()
 
@@ -202,7 +202,7 @@ function ENT:Draw()
 	render.SetStencilTestMask( 1 );
 	render.SetStencilReferenceValue( 1 );
 
-	local wx, wy = 40, 40;
+	local wx, wy = 50, 60;
 
 	self:DrawMask( wx, wy );
 
