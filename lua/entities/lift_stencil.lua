@@ -98,7 +98,8 @@ function ENT:DrawMask( windowSize )
 
 end
 
-local mat = Material("phoenix_storms/cube");
+-- local mat = Material("phoenix_storms/cube");
+local mat = Material("models/wireframe");
 
 function ENT:DrawInterior(windowSize)
 
@@ -118,41 +119,41 @@ function ENT:DrawInterior(windowSize)
 
 	local zd = windowSize;
 
+	base = p + z * -zd;
+
+	local function point(x, y, z)
+		mesh.Position(base + x + y + z);
+		mesh.AdvanceVertex();
+	end
+
 	mesh.Begin(MATERIAL_QUADS, 16);
+	do
+		local x,y,z = x * wx, y * wy, z * zd;
 
-	-- Bottom
-	base = p + y * wy + z * -zd;
-	a = base + (-z * zd) + (-x * wx)
-	b = base + ( z * zd) + (-x * wx)
-	c = base + ( z * zd) + ( x * wx)
-	d = base + (-z * zd) + ( x * wx)
-	mesh.Quad(a, b, c, d);
+		-- Bottom
+		point(-x,  y, -z)
+		point(-x,  y,  z)
+		point( x,  y,  z)
+		point( x,  y, -z)
 
-	-- Left
-	base = p + x  * wx + z * -zd;
-	a = base + (-z * zd) + ( y * wy)
-	b = base + ( z * zd) + ( y * wy)
-	c = base + ( z * zd) + (-y * wy)
-	d = base + (-z * zd) + (-y * wy)
-	mesh.Quad(a, b, c, d);
+		-- Left
+		point( x,  y, -z)
+		point( x,  y,  z)
+		point( x, -y,  z)
+		point( x, -y, -z)
 
+		-- Top
+		point( x, -y, -z)
+		point( x, -y,  z)
+		point(-x, -y,  z)
+		point(-x, -y, -z)
 
-	-- Top
-	base = p + y * -wy + z * -zd;
-	a = base + (-z * zd) + ( x * wx)
-	b = base + ( z * zd) + ( x * wx)
-	c = base + ( z * zd) + (-x * wx)
-	d = base + (-z * zd) + (-x * wx)
-	mesh.Quad(a, b, c, d);
-
-	-- Right
-	base = p + x * -wx + z * -zd;
-	a = base + (-z * zd) + (-y * wy)
-	b = base + ( z * zd) + (-y * wy)
-	c = base + ( z * zd) + ( y * wy)
-	d = base + (-z * zd) + ( y * wy)
-	mesh.Quad(a, b, c, d);
-
+		-- -- Right
+		point(-x, -y, -z)
+		point(-x, -y,  z)
+		point(-x,  y,  z)
+		point(-x,  y, -z)
+	end
 	mesh.End()
 
 	-- Back
