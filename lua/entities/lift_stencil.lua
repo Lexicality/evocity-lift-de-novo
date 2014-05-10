@@ -11,7 +11,7 @@ ENT.Category    = "Lift"
 ENT.Editable    = false
 ENT.Spawnable   = true
 ENT.AdminOnly   = false
-ENT.RenderGroup = RENDERGROUP_TRANSLUCENT
+ENT.RenderGroup = RENDERGROUP_TRANSALPHA
 
 function ENT:SpawnFunction( ply, tr, ClassName )
 
@@ -45,9 +45,29 @@ function ENT:Initialize()
 
 	else
 
+		self.ents = {
+			-- self
+		};
+
+		-- woo debug
+		g_Liftus = self;
+
 	end
 
 end
+
+if (SERVER) then return; end
+
+function ENT:AddEnt(ent)
+	table.insert(self.ents, ent);
+end
+
+concommand.Add("liftify", function(ply)
+	local ent = ply:GetEyeTrace().Entity;
+	if (IsValid(ent) and IsValid(g_Liftus)) then
+		g_Liftus:AddEnt(ent);
+	end
+end)
 
 -- TY Jinto! http://facepunch.com/showthread.php?t=1205832&p=37280318&viewfull=1#post37280318
 
@@ -66,7 +86,7 @@ function ENT:DrawMask( size )
 	mesh.Begin( MATERIAL_POLYGON, segments );
 
 	local function point(x, y)
-		mesh.Position( pos + (forward * y + right * x) * size + up * -44 );
+		mesh.Position( pos + (forward * y + right * x) * size + up * 0.5 );
 		mesh.AdvanceVertex()
 	end
 
@@ -94,17 +114,29 @@ end
 
 function ENT:DrawInterior()
 
-	self:DrawModel()
+	for i, ent in ipairs(self.ents) do
+		if (IsValid(ent)) then
+			ent:DrawModel();
+		else
+			table.remove(self.ents, i);
+		end
+	end
 end
 
 
 function ENT:DrawOverlay()
 
-	self:DrawModel()
+	-- self:DrawModel()d
 end
 
 
 function ENT:Draw()
+
+	render.SetBlend(0.9);
+
+	self:DrawModel();
+
+	render.SetBlend(1);
 
 	render.ClearStencil();
 	render.SetStencilEnable( true );
@@ -116,7 +148,7 @@ function ENT:Draw()
 	render.SetStencilTestMask( 1 );
 	render.SetStencilReferenceValue( 1 );
 
-	self:DrawMask( 20 );
+	self:DrawMask( 40 );
 
 	render.SetStencilCompareFunction( STENCIL_EQUAL );
 
