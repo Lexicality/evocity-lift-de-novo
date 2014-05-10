@@ -116,7 +116,7 @@ function ENT:DrawInterior(windowSize)
 
 	local wx, wy = windowSize, windowSize;
 
-	local zd = windowSize / 2;
+	local zd = (windowSize / 2) * (math.sin(CurTime()) + 1);
 
 	mesh.Begin(MATERIAL_QUADS, 16);
 
