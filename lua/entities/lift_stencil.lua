@@ -114,54 +114,59 @@ function ENT:DrawInterior(windowSize)
 
 	local base, a, b, c, d;
 
+	local wx, wy = windowSize, windowSize;
+
+	local zd = windowSize / 2;
+
+	mesh.Begin(MATERIAL_QUADS, 16);
 
 	-- Bottom
-	base = p + y * windowSize + z * - windowSize;
-	a = base + (-z - x) * windowSize
-	b = base + ( z - x) * windowSize
-	c = base + ( z + x) * windowSize
-	d = base + (-z + x) * windowSize
+	base = p + y * wy + z * -zd;
+	a = base + (-z * zd) + (-x * wx)
+	b = base + ( z * zd) + (-x * wx)
+	c = base + ( z * zd) + ( x * wx)
+	d = base + (-z * zd) + ( x * wx)
 	mesh.Begin(MATERIAL_QUADS, 4);
 	mesh.Quad(a, b, c, d);
 	mesh.End();
 
 	-- Left
-	base = p + x  * windowSize + z * - windowSize;
-	a = base + (-z + y) * windowSize
-	b = base + ( z + y) * windowSize
-	c = base + ( z - y) * windowSize
-	d = base + (-z - y) * windowSize
+	base = p + x  * wx + z * -zd;
+	a = base + (-z * zd) + ( y * wy)
+	b = base + ( z * zd) + ( y * wy)
+	c = base + ( z * zd) + (-y * wy)
+	d = base + (-z * zd) + (-y * wy)
 	mesh.Begin(MATERIAL_QUADS, 4);
 	mesh.Quad(a, b, c, d);
 	mesh.End();
 
 
 	-- Top
-	base = p + y * -windowSize + z * - windowSize;
-	a = base + (-z + x) * windowSize
-	b = base + ( z + x) * windowSize
-	c = base + ( z - x) * windowSize
-	d = base + (-z - x) * windowSize
+	base = p + y * -wy + z * -zd;
+	a = base + (-z * zd) + ( x * wx)
+	b = base + ( z * zd) + ( x * wx)
+	c = base + ( z * zd) + (-x * wx)
+	d = base + (-z * zd) + (-x * wx)
 	mesh.Begin(MATERIAL_QUADS, 4);
 	mesh.Quad(a, b, c, d);
 	mesh.End();
 
 	-- Right
-	base = p + x  * -windowSize + z * - windowSize;
-	a = base + (-z - y) * windowSize
-	b = base + ( z - y) * windowSize
-	c = base + ( z + y) * windowSize
-	d = base + (-z + y) * windowSize
+	base = p + x * -wx + z * -zd;
+	a = base + (-z * zd) + (-y * wy)
+	b = base + ( z * zd) + (-y * wy)
+	c = base + ( z * zd) + ( y * wy)
+	d = base + (-z * zd) + ( y * wy)
 	mesh.Begin(MATERIAL_QUADS, 4);
 	mesh.Quad(a, b, c, d);
 	mesh.End();
 
 	-- Back
-	base = p + z * - windowSize*2;
-	a = base + (-x + y) * windowSize
-	b = base + ( x + y) * windowSize
-	c = base + ( x - y) * windowSize
-	d = base + (-x - y) * windowSize
+	base = p + z * (-zd * 2);
+	a = base + (-x * wx) + ( y * wy)
+	b = base + ( x * wx) + ( y * wy)
+	c = base + ( x * wx) + (-y * wy)
+	d = base + (-x * wx) + (-y * wy)
 	mesh.Begin(MATERIAL_QUADS, 4);
 	mesh.Quad(a, b, c, d);
 	mesh.End();
