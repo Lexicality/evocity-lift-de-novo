@@ -1,4 +1,3 @@
-print "Hello world!"
 AddCSLuaFile()
 
 DEFINE_BASECLASS( "base_anim" )
@@ -26,6 +25,15 @@ function ENT:SpawnFunction( ply, tr, ClassName )
 
 	return ent
 end
+
+local world = SERVER and game.GetWorld() or Entity(0);
+MsgN("Hello ", tostring(world));
+
+-- hook.Add('ShouldCollide', 'lift collide', function(a, b)
+-- 	if (b == world and a:GetCollisionGroup() == COLLISION_GROUP_INTERACTIVE_DEBRIS) then
+-- 		return false;
+-- 	end
+-- end)
 
 function ENT:Initialize()
 
