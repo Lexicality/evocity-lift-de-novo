@@ -98,6 +98,7 @@ function ENT:DrawMask( windowSize )
 
 end
 
+local mat = Material("phoenix_storms/cube");
 
 function ENT:DrawInterior(windowSize)
 
@@ -108,7 +109,8 @@ function ENT:DrawInterior(windowSize)
 
 	local size = 20;
 
-	render.SetMaterial(Material("models/wireframe"));
+	render.SetMaterial(mat);
+	render.SuppressEngineLighting(true)
 
 	local base, a, b, c, d;
 
@@ -143,6 +145,9 @@ function ENT:DrawInterior(windowSize)
 			table.remove(self.ents, i);
 		end
 	end
+
+	render.SuppressEngineLighting(false)
+
 end
 
 
