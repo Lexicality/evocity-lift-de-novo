@@ -114,28 +114,26 @@ function ENT:DrawInterior(windowSize)
 
 	local base, a, b, c, d;
 
-	mesh.Begin( MATERIAL_QUADS, 4 );
 
+	-- Bottom
 	base = pos + f * windowSize + u * - windowSize;
 	a = base + (-u - r) * windowSize
 	b = base + ( u - r) * windowSize
 	c = base + ( u + r) * windowSize
 	d = base + (-u + r) * windowSize
-
+	mesh.Begin(MATERIAL_QUADS, 4);
 	mesh.Quad(a, b, c, d);
-
 	mesh.End();
 
-	mesh.Begin( MATERIAL_QUADS, 4 );
 
+	-- Top
 	base = pos + f * -windowSize + u * - windowSize;
-	a = base + (-u - r) * windowSize
-	b = base + ( u - r) * windowSize
-	c = base + ( u + r) * windowSize
-	d = base + (-u + r) * windowSize
-
-	mesh.Quad(d, c, b, a);
-
+	a = base + (-u + r) * windowSize
+	b = base + ( u + r) * windowSize
+	c = base + ( u - r) * windowSize
+	d = base + (-u - r) * windowSize
+	mesh.Begin(MATERIAL_QUADS, 4);
+	mesh.Quad(a, b, c, d);
 	mesh.End();
 
 	for i, ent in ipairs(self.ents) do
