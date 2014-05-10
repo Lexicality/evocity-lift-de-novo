@@ -71,48 +71,70 @@ end)
 
 -- TY Jinto! http://facepunch.com/showthread.php?t=1205832&p=37280318&viewfull=1#post37280318
 
-function ENT:DrawMask( size )
+function ENT:DrawMask( windowSize )
 
 	local pos = self:GetPos();
-	local up = self:GetUp();
-	local forward = self:GetForward();
-	local right = self:GetRight();
+	local u = self:GetUp();
+	local f = self:GetForward();
+	local r = self:GetRight();
 
 	local segments = 4;
 
 
 	render.SetColorMaterial();
 
-	mesh.Begin( MATERIAL_POLYGON, segments );
 
-	local function point(x, y)
-		mesh.Position( pos + (forward * y + right * x) * size + up * 0.5 );
-		mesh.AdvanceVertex()
-	end
+	mesh.Begin( MATERIAL_QUADS, segments );
 
-	point(-1, -1)
-	point( 1, -1)
-	point( 1,  1)
-	point(-1,  1)
+	local base = pos + u * 0.5;
+	local a = base + (-f - r) * windowSize
+	local b = base + ( f - r) * windowSize
+	local c = base + ( f + r) * windowSize
+	local d = base + (-f + r) * windowSize
 
-
-	-- for i = 0, segments - 1 do
-
-	-- 	local rot = math.pi * 2 * ( i / segments );
-	-- 	local sin = math.sin( rot ) * size;
-	-- 	local cos = math.cos( rot ) * size;
-
-	-- 	mesh.Position( pos + ( forward * sin ) + ( right * cos ) );
-	-- 	mesh.AdvanceVertex();
-
-	-- end
+	mesh.Quad(a, b, c, d);
 
 	mesh.End();
 
 end
 
 
-function ENT:DrawInterior()
+function ENT:DrawInterior(windowSize)
+
+	local pos = self:GetPos();
+	local u = self:GetUp();
+	local f = self:GetForward();
+	local r = self:GetRight();
+
+	local size = 20;
+
+	render.SetMaterial(Material("models/wireframe"));
+
+	local base, a, b, c, d;
+
+	mesh.Begin( MATERIAL_QUADS, 4 );
+
+	base = pos + f * windowSize + u * - windowSize;
+	a = base + (-u - r) * windowSize
+	b = base + ( u - r) * windowSize
+	c = base + ( u + r) * windowSize
+	d = base + (-u + r) * windowSize
+
+	mesh.Quad(a, b, c, d);
+
+	mesh.End();
+
+	mesh.Begin( MATERIAL_QUADS, 4 );
+
+	base = pos + f * -windowSize + u * - windowSize;
+	a = base + (-u - r) * windowSize
+	b = base + ( u - r) * windowSize
+	c = base + ( u + r) * windowSize
+	d = base + (-u + r) * windowSize
+
+	mesh.Quad(d, c, b, a);
+
+	mesh.End();
 
 	for i, ent in ipairs(self.ents) do
 		if (IsValid(ent)) then
@@ -148,14 +170,16 @@ function ENT:Draw()
 	render.SetStencilTestMask( 1 );
 	render.SetStencilReferenceValue( 1 );
 
-	self:DrawMask( 40 );
+	local windowSize = 40;
+
+	self:DrawMask( windowSize );
 
 	render.SetStencilCompareFunction( STENCIL_EQUAL );
 
 	-- clear the inside of our mask so we have a nice clean slate to draw in.
 	render.ClearBuffersObeyStencil( 0, 0, 0, 0, true );
 
-	self:DrawInterior();
+	self:DrawInterior( windowSize );
 
 	render.SetStencilEnable( false );
 
