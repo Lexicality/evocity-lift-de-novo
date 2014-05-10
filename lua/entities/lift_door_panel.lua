@@ -25,10 +25,10 @@ if (SERVER) then
 			phys:EnableMotion(false);
 		end
 	end
-	function ENT:SpawnFunction(ply, tr)
+	function ENT:SpawnFunction(ply, tr, classname)
 		if (not tr.Hit) then return end
 		local pos = tr.HitPos + tr.HitNormal * 30;
-		local ent = ents.Create(self.ClassName);
+		local ent = ents.Create(classname);
 		ent:SetPos(pos);
 		ent:Spawn();
 		ent:Activate();

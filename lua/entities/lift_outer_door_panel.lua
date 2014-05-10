@@ -34,8 +34,8 @@ if (CLIENT) then
 		self:DrawHologram(acolour, amat);
 	end
 else
-	function ENT:SpawnFunction(ply, tr)
-		scripted_ents.Get(self.Base)["SpawnFunction"](self, ply, tr);
+	function ENT:SpawnFunction(ply, tr, classname)
+		scripted_ents.Get(self.Base)["SpawnFunction"](self, ply, tr, classname);
 	end
 
 	function ENT:Use(activator)

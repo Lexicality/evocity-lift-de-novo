@@ -138,10 +138,10 @@ else
 		end
 	end
 
-	function ENT:SpawnFunction(ply, tr)
+	function ENT:SpawnFunction(ply, tr, classname)
 		if (not tr.Hit) then return end
 		local pos = tr.HitPos + tr.HitNormal * 30;
-		local ent = ents.Create("lift_control_panel");
+		local ent = ents.Create(classname);
 		ent:SetPos(pos);
 		ent:SetAngles(Angle(0, 90, 90));
 		ent:Spawn();
