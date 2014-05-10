@@ -102,10 +102,10 @@ local mat = Material("phoenix_storms/cube");
 
 function ENT:DrawInterior(windowSize)
 
-	local pos = self:GetPos();
-	local u = self:GetUp();
-	local f = self:GetForward();
-	local r = self:GetRight();
+	local p = self:GetPos();
+	local z = self:GetUp();
+	local y = self:GetForward();
+	local x  = self:GetRight();
 
 	local size = 20;
 
@@ -116,51 +116,52 @@ function ENT:DrawInterior(windowSize)
 
 
 	-- Bottom
-	base = pos + f * windowSize + u * - windowSize;
-	a = base + (-u - r) * windowSize
-	b = base + ( u - r) * windowSize
-	c = base + ( u + r) * windowSize
-	d = base + (-u + r) * windowSize
+	base = p + y * windowSize + z * - windowSize;
+	a = base + (-z - x) * windowSize
+	b = base + ( z - x) * windowSize
+	c = base + ( z + x) * windowSize
+	d = base + (-z + x) * windowSize
 	mesh.Begin(MATERIAL_QUADS, 4);
 	mesh.Quad(a, b, c, d);
 	mesh.End();
 
 	-- Left
-	base = pos + r * windowSize + u * - windowSize;
-	a = base + (-u + f) * windowSize
-	b = base + ( u + f) * windowSize
-	c = base + ( u - f) * windowSize
-	d = base + (-u - f) * windowSize
+	base = p + x  * windowSize + z * - windowSize;
+	a = base + (-z + y) * windowSize
+	b = base + ( z + y) * windowSize
+	c = base + ( z - y) * windowSize
+	d = base + (-z - y) * windowSize
+	mesh.Begin(MATERIAL_QUADS, 4);
+	mesh.Quad(a, b, c, d);
+	mesh.End();
+
+
+	-- Top
+	base = p + y * -windowSize + z * - windowSize;
+	a = base + (-z + x) * windowSize
+	b = base + ( z + x) * windowSize
+	c = base + ( z - x) * windowSize
+	d = base + (-z - x) * windowSize
 	mesh.Begin(MATERIAL_QUADS, 4);
 	mesh.Quad(a, b, c, d);
 	mesh.End();
 
 	-- Right
-	base = pos + r * -windowSize + u * - windowSize;
-	a = base + (-u - f) * windowSize
-	b = base + ( u - f) * windowSize
-	c = base + ( u + f) * windowSize
-	d = base + (-u + f) * windowSize
-	mesh.Begin(MATERIAL_QUADS, 4);
-	mesh.Quad(a, b, c, d);
-	mesh.End();
-
-	-- Top
-	base = pos + f * -windowSize + u * - windowSize;
-	a = base + (-u + r) * windowSize
-	b = base + ( u + r) * windowSize
-	c = base + ( u - r) * windowSize
-	d = base + (-u - r) * windowSize
+	base = p + x  * -windowSize + z * - windowSize;
+	a = base + (-z - y) * windowSize
+	b = base + ( z - y) * windowSize
+	c = base + ( z + y) * windowSize
+	d = base + (-z + y) * windowSize
 	mesh.Begin(MATERIAL_QUADS, 4);
 	mesh.Quad(a, b, c, d);
 	mesh.End();
 
 	-- Back
-	base = pos + u * - windowSize*2;
-	a = base + (-r + f) * windowSize
-	b = base + ( r + f) * windowSize
-	c = base + ( r - f) * windowSize
-	d = base + (-r - f) * windowSize
+	base = p + z * - windowSize*2;
+	a = base + (-x + y) * windowSize
+	b = base + ( x + y) * windowSize
+	c = base + ( x - y) * windowSize
+	d = base + (-x - y) * windowSize
 	mesh.Begin(MATERIAL_QUADS, 4);
 	mesh.Quad(a, b, c, d);
 	mesh.End();
