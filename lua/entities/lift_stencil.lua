@@ -99,7 +99,8 @@ function ENT:DrawMask( windowSize )
 end
 
 -- local mat = Material("phoenix_storms/cube");
-local mat = Material("models/wireframe");
+-- local mat = Material("models/wireframe");
+local mat = Material("models/props_c17/paper01");
 
 function ENT:DrawInterior(windowSize)
 
@@ -121,8 +122,9 @@ function ENT:DrawInterior(windowSize)
 
 	base = p + z * -zd;
 
-	local function point(x, y, z)
+	local function point(x, y, z, u, v)
 		mesh.Position(base + x + y + z);
+		mesh.TexCoord(0, u, v);
 		mesh.AdvanceVertex();
 	end
 
@@ -131,28 +133,28 @@ function ENT:DrawInterior(windowSize)
 		local x,y,z = x * wx, y * wy, z * zd;
 
 		-- Bottom
-		point(-x,  y, -z)
-		point(-x,  y,  z)
-		point( x,  y,  z)
-		point( x,  y, -z)
+		point(-x,  y, -z, 1, 0)
+		point(-x,  y,  z, 1, 1)
+		point( x,  y,  z, 0, 1)
+		point( x,  y, -z, 0, 0)
 
 		-- Left
-		point( x,  y, -z)
-		point( x,  y,  z)
-		point( x, -y,  z)
-		point( x, -y, -z)
+		point( x,  y, -z, 1, 1)
+		point( x,  y,  z, 0, 1)
+		point( x, -y,  z, 0, 0)
+		point( x, -y, -z, 1, 0)
 
 		-- Top
-		point( x, -y, -z)
-		point( x, -y,  z)
-		point(-x, -y,  z)
-		point(-x, -y, -z)
+		point( x, -y, -z, 0, 0)
+		point( x, -y,  z, 0, 1)
+		point(-x, -y,  z, 1, 1)
+		point(-x, -y, -z, 1, 0)
 
-		-- -- Right
-		point(-x, -y, -z)
-		point(-x, -y,  z)
-		point(-x,  y,  z)
-		point(-x,  y, -z)
+		-- Right
+		point(-x, -y, -z, 0, 0)
+		point(-x, -y,  z, 1, 0)
+		point(-x,  y,  z, 1, 1)
+		point(-x,  y, -z, 0, 1)
 	end
 	mesh.End()
 
