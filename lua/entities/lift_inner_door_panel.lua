@@ -1,6 +1,8 @@
 --[[
 	Lift door panel (Inner)
 --]]
+AddCSLuaFile();
+
 ENT.Type      = "anim"
 ENT.Base      = "lift_door_panel"
 ENT.PrintName = "Inner Lift Door Panel"
@@ -28,5 +30,21 @@ if (CLIENT) then
 			amat = waittext;
 		end
 		self:DrawHologram(acolour, amat);
+	end
+else
+	function ENT:SpawnFunction(ply, tr)
+		scripted_ents.Get(self.Base)["SpawnFunction"](self, ply, tr);
+	end
+
+	function ENT:Use(activator)
+		print(self, activator, self:GetDTBool(0));
+		if (not activator:IsPlayer()) then
+			return;
+		end
+		liftnum = activator:GetNWInt("liftnumber");
+		if (liftnum == 0) then return; end
+		if (self:GetDTBool(liftnum - 1)) then
+			lift.GetOut(activator);
+		end
 	end
 end
