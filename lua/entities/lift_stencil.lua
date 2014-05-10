@@ -116,7 +116,7 @@ function ENT:DrawInterior(windowSize)
 
 	local wx, wy = windowSize, windowSize;
 
-	local zd = (windowSize / 2) * (math.sin(CurTime()) + 1);
+	local zd = windowSize;
 
 	mesh.Begin(MATERIAL_QUADS, 16);
 
@@ -126,9 +126,7 @@ function ENT:DrawInterior(windowSize)
 	b = base + ( z * zd) + (-x * wx)
 	c = base + ( z * zd) + ( x * wx)
 	d = base + (-z * zd) + ( x * wx)
-	mesh.Begin(MATERIAL_QUADS, 4);
 	mesh.Quad(a, b, c, d);
-	mesh.End();
 
 	-- Left
 	base = p + x  * wx + z * -zd;
@@ -136,9 +134,7 @@ function ENT:DrawInterior(windowSize)
 	b = base + ( z * zd) + ( y * wy)
 	c = base + ( z * zd) + (-y * wy)
 	d = base + (-z * zd) + (-y * wy)
-	mesh.Begin(MATERIAL_QUADS, 4);
 	mesh.Quad(a, b, c, d);
-	mesh.End();
 
 
 	-- Top
@@ -147,9 +143,7 @@ function ENT:DrawInterior(windowSize)
 	b = base + ( z * zd) + ( x * wx)
 	c = base + ( z * zd) + (-x * wx)
 	d = base + (-z * zd) + (-x * wx)
-	mesh.Begin(MATERIAL_QUADS, 4);
 	mesh.Quad(a, b, c, d);
-	mesh.End();
 
 	-- Right
 	base = p + x * -wx + z * -zd;
@@ -157,9 +151,9 @@ function ENT:DrawInterior(windowSize)
 	b = base + ( z * zd) + (-y * wy)
 	c = base + ( z * zd) + ( y * wy)
 	d = base + (-z * zd) + ( y * wy)
-	mesh.Begin(MATERIAL_QUADS, 4);
 	mesh.Quad(a, b, c, d);
-	mesh.End();
+
+	mesh.End()
 
 	-- Back
 	base = p + z * (-zd * 2);
