@@ -118,15 +118,19 @@ function ENT:DrawInterior(wx, wy)
 
 	local zd = wx;
 
+	mesh.Begin(MATERIAL_QUADS, 36);
+
 	local function point(x, y, z, u, v)
 		mesh.Position(base + x + y + z);
 		mesh.TexCoord(0, u, v);
 		mesh.AdvanceVertex();
 	end
 
-	mesh.Begin(MATERIAL_QUADS, 16);
+	local doorDepth = 10;
+
+	-- Doorway
 	do
-		local x, y, z = x * wx, y * wy, z * 10;
+		local x, y, z = x * wx, y * wy, z * doorDepth;
 		base = p - z;
 
 		-- Bottom
@@ -137,8 +141,8 @@ function ENT:DrawInterior(wx, wy)
 
 		-- Left
 		point( x,  y, -z, 0.2, 1)
-		point( x,  y,  z, 0, 1)
-		point( x, -y,  z, 0, 0)
+		point( x,  y,  z, 0,   1)
+		point( x, -y,  z, 0,   0)
 		point( x, -y, -z, 0.2, 0)
 
 		-- Top
@@ -149,22 +153,45 @@ function ENT:DrawInterior(wx, wy)
 
 		-- Right
 		point(-x, -y, -z, 0.2, 0)
-		point(-x, -y,  z, 0, 0)
-		point(-x,  y,  z, 0, 1)
+		point(-x, -y,  z, 0,   0)
+		point(-x,  y,  z, 0,   1)
 		point(-x,  y, -z, 0.2, 1)
 	end
+
+	-- Interior
+	local interiorDepth = 60;
+	local interiorWidth = wx * 2;
+	do
+		base = base - z * doorDepth - z * interiorDepth;
+		local x, y, z = x * interiorWidth, y * wy, z * interiorDepth;
+		-- Bottom
+		point(-x,  y, -z,  1.5, 1)
+		point(-x,  y,  z,  1.5, 0.2)
+		point( x,  y,  z, -0.5, 0.2)
+		point( x,  y, -z, -0.5, 1)
+		-- Left
+		point( x,  y, -z, 1,   1)
+		point( x,  y,  z, 0.2, 1)
+		point( x, -y,  z, 0.2, 0)
+		point( x, -y, -z, 1,   0)
+		-- Top
+		point( x, -y, -z, -0.5, 1)
+		point( x, -y,  z, -0.5, 0.2)
+		point(-x, -y,  z,  1.5, 0.2)
+		point(-x, -y, -z,  1.5, 1)
+		-- Right
+		point(-x, -y, -z, 1,   0)
+		point(-x, -y,  z, 0.2, 0)
+		point(-x,  y,  z, 0.2, 1)
+		point(-x,  y, -z, 1,   1)
+		-- Back
+		point(-x,  y, -z, -0.5, 1)
+		point( x,  y, -z,  1.5, 1)
+		point( x, -y, -z,  1.5, 0)
+		point(-x, -y, -z, -0.5, 0)
+	end
+
 	mesh.End()
-
-	-- Back
-	base = p + z * (-zd * 2);
-	a = base + (-x * wx) + ( y * wy)
-	b = base + ( x * wx) + ( y * wy)
-	c = base + ( x * wx) + (-y * wy)
-	d = base + (-x * wx) + (-y * wy)
-	mesh.Begin(MATERIAL_QUADS, 4);
-	mesh.Quad(a, b, c, d);
-	mesh.End();
-
 	for i, ent in ipairs(self.ents) do
 		if (IsValid(ent)) then
 			ent:DrawModel();
@@ -202,7 +229,7 @@ function ENT:Draw()
 	render.SetStencilTestMask( 1 );
 	render.SetStencilReferenceValue( 1 );
 
-	local wx, wy = 50, 60;
+	local wx, wy = 45, 55;
 
 	self:DrawMask( wx, wy );
 
