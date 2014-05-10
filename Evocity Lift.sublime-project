@@ -12,6 +12,10 @@
 			"path": "lua\\autorun"
 		},
 		{
+			"folder_exclude_patterns":
+			[
+				"lua"
+			],
 			"follow_symlinks": true,
 			"name": "Addon",
 			"path": "."
