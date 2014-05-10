@@ -71,12 +71,12 @@ end)
 
 -- TY Jinto! http://facepunch.com/showthread.php?t=1205832&p=37280318&viewfull=1#post37280318
 
-function ENT:DrawMask( windowSize )
+function ENT:DrawMask( wx, wy )
 
-	local pos = self:GetPos();
-	local u = self:GetUp();
-	local f = self:GetForward();
-	local r = self:GetRight();
+	local p = self:GetPos();
+	local z = self:GetUp();
+	local y = self:GetForward();
+	local x  = self:GetRight();
 
 	local segments = 4;
 
@@ -86,11 +86,11 @@ function ENT:DrawMask( windowSize )
 
 	mesh.Begin( MATERIAL_QUADS, segments );
 
-	local base = pos + u * -0.5;
-	local a = base + (-f - r) * windowSize
-	local b = base + ( f - r) * windowSize
-	local c = base + ( f + r) * windowSize
-	local d = base + (-f + r) * windowSize
+	local base = p + z * -0.5;
+	local a = base + (-y * wy) + (-x * wx)
+	local b = base + ( y * wy) + (-x * wx)
+	local c = base + ( y * wy) + ( x * wx)
+	local d = base + (-y * wy) + ( x * wx)
 
 	mesh.Quad(a, b, c, d);
 
@@ -102,7 +102,7 @@ end
 -- local mat = Material("models/wireframe");
 local mat = Material("models/props_c17/paper01");
 
-function ENT:DrawInterior(windowSize)
+function ENT:DrawInterior(wx, wy)
 
 	local p = self:GetPos();
 	local z = self:GetUp();
@@ -116,11 +116,8 @@ function ENT:DrawInterior(windowSize)
 
 	local base, a, b, c, d;
 
-	local wx, wy = windowSize, windowSize;
-
-	local zd = windowSize;
-
 	base = p + z * -zd;
+	local zd = wx;
 
 	local function point(x, y, z, u, v)
 		mesh.Position(base + x + y + z);
@@ -205,16 +202,16 @@ function ENT:Draw()
 	render.SetStencilTestMask( 1 );
 	render.SetStencilReferenceValue( 1 );
 
-	local windowSize = 40;
+	local wx, wy = 40, 40;
 
-	self:DrawMask( windowSize );
+	self:DrawMask( wx, wy );
 
 	render.SetStencilCompareFunction( STENCIL_EQUAL );
 
 	-- clear the inside of our mask so we have a nice clean slate to draw in.
 	render.ClearBuffersObeyStencil( 0, 0, 0, 0, true );
 
-	self:DrawInterior( windowSize );
+	self:DrawInterior( wx, wy );
 
 	render.SetStencilEnable( false );
 
