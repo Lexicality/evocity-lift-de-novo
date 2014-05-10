@@ -1,0 +1,28 @@
+{
+	"folders":
+	[
+		{
+			"follow_symlinks": true,
+			"name": "Ents",
+			"path": "lua\\entities"
+		},
+		{
+			"follow_symlinks": true,
+			"name": "Lua Autorun",
+			"path": "lua\\autorun"
+		},
+		{
+			"follow_symlinks": true,
+			"name": "Addon",
+			"path": "."
+		}
+	],
+	"settings":
+	{
+		"detect_indentation": false,
+		"ensure_newline_at_eof_on_save": true,
+		"tab_size": 4,
+		"translate_tabs_to_spaces": false,
+		"trim_trailing_white_space_on_save": true
+	}
+}
