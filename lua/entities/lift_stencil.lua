@@ -12,7 +12,6 @@ ENT.Spawnable   = true
 ENT.AdminOnly   = false
 ENT.RenderGroup = RENDERGROUP_TRANSALPHA
 
-function ENT:SpawnFunction( ply, tr, ClassName )
 function ENT:SpawnFunction( paly, tr, ClassName )
 
 	if ( not tr.Hit ) then return end
@@ -104,9 +103,35 @@ function ENT:DrawMask( wx, wy, voffset )
 
 end
 
-local mat = Material("phoenix_storms/cube");
--- local mat = Material("models/wireframe");
+-- local mat = Material("phoenix_storms/cube");
+local mat = Material("models/wireframe");
 -- local mat = Material("models/props_c17/paper01");
+
+local mat_wall, mat_floor, mat_ceil, mat_entry;
+
+
+
+local mat_wall  = CreateMaterial("lift_wall2", "UnlitGeneric", {
+	["$basetexture"] = "env/brush/walls/wall_woodpanelsplain"
+});
+local mat_floor = CreateMaterial("lift_floor", "UnlitGeneric", {
+	["$basetexture"] = "sgtsicktextures/marblefloor2"
+});
+local mat_ceil  = CreateMaterial("lift_ceil", "UnlitGeneric", {
+	["$basetexture"] = "highrise/se1_acoustic_stairwell_ceiling_01"
+});
+local mat_door  = CreateMaterial("lift_door", "UnlitGeneric", {
+	["$basetexture"] = "ajacks/ajacksbssdoor"
+});
+local mat_entry = CreateMaterial("lift_entry", "UnlitGeneric", {
+	["$basetexture"] = "bridge/se1_metal_flat_steel_01"
+});
+
+-- env/brush/walls/wall_woodpanelsplain
+-- sgtsicktextures/marblefloor2
+-- highrise/se1_acoustic_stairwell_ceiling_01
+-- ajacks/ajacksbssdoor
+-- bridge/se1_metal_flat_steel_01
 
 function ENT:DrawInterior(wx, wy, voffset)
 
@@ -124,7 +149,6 @@ function ENT:DrawInterior(wx, wy, voffset)
 
 	local zd = wx;
 
-	mesh.Begin(MATERIAL_QUADS, 36);
 
 	local function point(x, y, z, u, v)
 		mesh.Position(base + x + y + z);
@@ -132,11 +156,13 @@ function ENT:DrawInterior(wx, wy, voffset)
 		mesh.AdvanceVertex();
 	end
 
-	local doorDepth = 10;
+	local doorDepth = 5;
 
 	base = p - y * voffset;
 
 	-- Doorway
+	render.SetMaterial(mat_entry);
+	mesh.Begin(MATERIAL_QUADS, 4);
 	do
 		local x, y, z = x * wx, y * wy, z * doorDepth;
 		base = base - z;
@@ -165,6 +191,7 @@ function ENT:DrawInterior(wx, wy, voffset)
 		point(-x,  y,  z, 0,   1);
 		point(-x,  y, -z, 0.2, 1);
 	end
+	mesh.End();
 
 	-- Interior
 	local interiorDepth = 60;
@@ -172,34 +199,45 @@ function ENT:DrawInterior(wx, wy, voffset)
 	do
 		base = base - z * doorDepth - z * interiorDepth;
 		local x, y, z = x * interiorWidth, y * wy, z * interiorDepth;
+
+		render.SetMaterial(mat_floor);
+		mesh.Begin(MATERIAL_QUADS, 1);
 		-- Bottom
 		point(-x,  y, -z,  1.5, 1);
-		point(-x,  y,  z,  1.5, 0.2);
-		point( x,  y,  z, -0.5, 0.2);
+		point(-x,  y,  z,  1.5, 0);
+		point( x,  y,  z, -0.5, 0);
 		point( x,  y, -z, -0.5, 1);
+		mesh.End();
+
+		render.SetMaterial(mat_wall);
+		mesh.Begin(MATERIAL_QUADS, 3);
 		-- Left
-		point( x,  y, -z, 1,   1);
-		point( x,  y,  z, 0.2, 1);
-		point( x, -y,  z, 0.2, 0);
-		point( x, -y, -z, 1,   0);
-		-- Top
-		point( x, -y, -z, -0.5, 1);
-		point( x, -y,  z, -0.5, 0.2);
-		point(-x, -y,  z,  1.5, 0.2);
-		point(-x, -y, -z,  1.5, 1);
+		point( x,  y, -z, 1, 1);
+		point( x,  y,  z, 0, 1);
+		point( x, -y,  z, 0, 0);
+		point( x, -y, -z, 1, 0);
 		-- Right
-		point(-x, -y, -z, 1,   0);
-		point(-x, -y,  z, 0.2, 0);
-		point(-x,  y,  z, 0.2, 1);
-		point(-x,  y, -z, 1,   1);
+		point(-x, -y, -z, 1, 0);
+		point(-x, -y,  z, 0, 0);
+		point(-x,  y,  z, 0, 1);
+		point(-x,  y, -z, 1, 1);
 		-- Back
 		point(-x,  y, -z, -0.5, 1);
 		point( x,  y, -z,  1.5, 1);
 		point( x, -y, -z,  1.5, 0);
 		point(-x, -y, -z, -0.5, 0);
+		mesh.End();
+
+		render.SetMaterial(mat_ceil);
+		mesh.Begin(MATERIAL_QUADS, 1);
+		-- Top
+		point( x, -y, -z, -0.5, 1);
+		point( x, -y,  z, -0.5, 0);
+		point(-x, -y,  z,  1.5, 0);
+		point(-x, -y, -z,  1.5, 1);
+		mesh.End();
 	end
 
-	mesh.End()
 	for i, ent in ipairs(self.ents) do
 		if (IsValid(ent)) then
 			ent:DrawModel();
