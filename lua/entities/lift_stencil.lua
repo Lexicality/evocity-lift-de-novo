@@ -13,6 +13,7 @@ ENT.AdminOnly   = false
 ENT.RenderGroup = RENDERGROUP_TRANSALPHA
 
 function ENT:SpawnFunction( ply, tr, ClassName )
+function ENT:SpawnFunction( paly, tr, ClassName )
 
 	if ( not tr.Hit ) then return end
 
@@ -26,8 +27,10 @@ function ENT:SpawnFunction( ply, tr, ClassName )
 	return ent
 end
 
-local world = SERVER and game.GetWorld() or Entity(0);
-MsgN("Hello ", tostring(world));
+MsgN("Hello World");
+
+-- local world = SERVER and game.GetWorld() or Entity(0);
+-- MsgN("Hello ", tostring(world));
 
 -- hook.Add('ShouldCollide', 'lift collide', function(a, b)
 -- 	if (b == world and a:GetCollisionGroup() == COLLISION_GROUP_INTERACTIVE_DEBRIS) then
@@ -39,7 +42,7 @@ function ENT:Initialize()
 
 	if ( SERVER ) then
 
-		self:SetModel("models/hunter/plates/plate1x1.mdl");
+		self:SetModel("models/hunter/plates/plate2x2.mdl");
 		self:PhysicsInit(SOLID_VPHYSICS);
 		self:SetMoveType(MOVETYPE_VPHYSICS);
 		self:SetSolid(SOLID_VPHYSICS);
@@ -74,7 +77,7 @@ end)
 
 -- TY Jinto! http://facepunch.com/showthread.php?t=1205832&p=37280318&viewfull=1#post37280318
 
-function ENT:DrawMask( wx, wy )
+function ENT:DrawMask( wx, wy, voffset )
 
 	local p = self:GetPos();
 	local z = self:GetUp();
@@ -89,7 +92,7 @@ function ENT:DrawMask( wx, wy )
 
 	mesh.Begin( MATERIAL_QUADS, segments );
 
-	local base = p + z * -0.5;
+	local base = p + z * -1.7 - y * voffset;
 	local a = base + (-y * wy) + (-x * wx);
 	local b = base + ( y * wy) + (-x * wx);
 	local c = base + ( y * wy) + ( x * wx);
@@ -105,7 +108,7 @@ local mat = Material("phoenix_storms/cube");
 -- local mat = Material("models/wireframe");
 -- local mat = Material("models/props_c17/paper01");
 
-function ENT:DrawInterior(wx, wy)
+function ENT:DrawInterior(wx, wy, voffset)
 
 	local p = self:GetPos();
 	local z = self:GetUp();
@@ -131,10 +134,12 @@ function ENT:DrawInterior(wx, wy)
 
 	local doorDepth = 10;
 
+	base = p - y * voffset;
+
 	-- Doorway
 	do
 		local x, y, z = x * wx, y * wy, z * doorDepth;
-		base = p - z;
+		base = base - z;
 
 		-- Bottom
 		point(-x,  y, -z, 1, 0.2);
@@ -216,7 +221,7 @@ end
 
 function ENT:Draw()
 
-	render.SetBlend(0.9);
+	render.SetBlend(0.1);
 
 	self:DrawModel();
 
@@ -232,16 +237,18 @@ function ENT:Draw()
 	render.SetStencilTestMask( 1 );
 	render.SetStencilReferenceValue( 1 );
 
-	local wx, wy = 45, 55;
+	local wx, wy = 47.7, 56;
+	-- local voffset = 7.4;
+	local voffset = 8.3;
 
-	self:DrawMask( wx, wy );
+	self:DrawMask( wx, wy, voffset );
 
 	render.SetStencilCompareFunction( STENCIL_EQUAL );
 
 	-- clear the inside of our mask so we have a nice clean slate to draw in.
 	render.ClearBuffersObeyStencil( 0, 0, 0, 0, true );
 
-	self:DrawInterior( wx, wy );
+	self:DrawInterior( wx, wy, voffset );
 
 	render.SetStencilEnable( false );
 
