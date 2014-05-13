@@ -250,6 +250,25 @@ function ENT:DrawInterior(wx, wy, voffset)
 
 end
 
+-- lua_run_cl g_LiftEnt = Entity(759)
+function ENT:DrawLift()
+	local lift = g_LiftEnt
+
+	local pos = self:LocalToWorld( Vector( 48, 0, -100 ) )
+	local ang = self:LocalToWorldAngles( Angle( 90, 180, 0 ) )
+
+	local origin = lift:GetRenderOrigin();
+	local angles = lift:GetRenderAngles();
+
+	lift:SetRenderOrigin( pos )
+	lift:SetRenderAngles( ang )
+
+	lift:DrawModel()
+
+	lift:SetRenderOrigin(origin)
+	lift:SetRenderAngles(angles)
+end
+
 
 function ENT:DrawOverlay()
 
@@ -286,7 +305,11 @@ function ENT:Draw()
 	-- clear the inside of our mask so we have a nice clean slate to draw in.
 	render.ClearBuffersObeyStencil( 0, 0, 0, 0, true );
 
-	self:DrawInterior( wx, wy, voffset );
+	if (IsValid(g_LiftEnt)) then
+		self:DrawLift();
+	else
+		self:DrawInterior( wx, wy, voffset );
+	end
 
 	render.SetStencilEnable( false );
 
